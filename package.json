@@ -1,0 +1,10 @@
+{
+  "name": "NTCompanion",
+  "version": "1.0.0",
+  "description": "A tracker app for Nuclear Throne",
+  "main": "index.js",
+  "repository": "https://github.com/KatTheFox/NTCompanion",
+  "author": "KatTheFox",
+  "license": "GPL-3.0-or-later",
+  "private": false
+}
