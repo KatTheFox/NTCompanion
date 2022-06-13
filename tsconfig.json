@@ -1,0 +1,7 @@
+{
+    "extends": "isaacscript-tsconfig/tsconfig.node.json",
+    "compilerOptions": {
+        "rootDir": "./src"
+    },
+    "include": ["./src/**/*.ts"]
+}
