@@ -16,233 +16,210 @@ export enum Character {
   FROG = 15,
 }
 export type SaveData = {
-  /** A message about how YV will shank you if you edit the savedata file */
+  /** A message about how YV will shank you if you edit the savedata file. */
   "VLAMBEER DRM 2013-NOW": string;
-  /** Game version */
+  /** Game version. */
   version: string;
-  /** Various stats */
+  /** Various stats. */
   stats: {
-    /** Total playtime */
+    /** Total playtime. */
     tot_time: number;
-    /** Data for Fish */
+    /** Data for Fish. */
     charData_1: CharData;
-    /** Data for Crystal */
+    /** Data for Crystal. */
 
     charData_2: CharData;
-    /** Data for Eyes */
+    /** Data for Eyes. */
     charData_3: CharData;
-    /** Data for Melting */
+    /** Data for Melting. */
     charData_4: CharData;
-    /** Data for Plant */
+    /** Data for Plant. */
     charData_5: CharData;
-    /** Data for YV */
+    /** Data for YV. */
     charData_6: CharData;
-    /** Data for Steroids */
+    /** Data for Steroids. */
     charData_7: CharData;
-    /** Data for Robot */
+    /** Data for Robot. */
     charData_8: CharData;
-    /** Data for Chicken */
+    /** Data for Chicken. */
     charData_9: CharData;
-    /** Data for Rebel */
+    /** Data for Rebel. */
     charData_10: CharData;
-    /** Data for Horror */
+    /** Data for Horror. */
     charData_11: CharData;
-    /** Data for Rogue */
+    /** Data for Rogue. */
     charData_12: CharData;
-    /** Data for Big Dog */
+    /** Data for Big Dog. */
     charData_13: CharData;
-    /** Data for Skeleton */
+    /** Data for Skeleton. */
     charData_14: CharData;
-    /** Data for Frog */
+    /** Data for Frog. */
     charData_15: CharData;
-    /** Data for Cuz */
+    /** Data for Cuz. */
     charData_16: CharData;
-    /** Unknown */
+    /** Unknown. */
     charData_17: CharData;
   };
-  /** Settings and preferences */
+  /** Settings and preferences. */
   options: {
-    /** Not sure what this is */
+    /** Not sure what this is. */
     kbkeypick: number;
-    /** Ambiance Volume (0.00 - 1.00) */
+    /** Ambiance Volume (0.00 - 1.00). */
     ambvol: number;
-    /** Borderless Fullscreen (0 = Off, 1 = On) */
+    /** Borderless Fullscreen (0 = Off, 1 = On). */
     borderless: number;
-    /** Gamepad Enabled (0 = Off, 1 = On)
-     */
+    /** Gamepad Enabled (0 = Off, 1 = On). */
     gamepad: number;
-    /** Boss Intros (0 = Off, 1 = On) */
+    /** Boss Intros (0 = Off, 1 = On). */
     bintro: number;
-    /** Keybind for firing, on a gamepad */
+    /** Keybind for firing, on a gamepad. */
     gpkeyfire: number;
-    /** Controller Selection (X-Box or Playstation) (1, 2) */
+    /** Controller Selection (X-Box or Playstation) (1, 2). */
     gamepadstyle: number;
-    /**
-     * Full Screen (0 = Off, 1 = On)
-     */
+    /** Full Screen (0 = Off, 1 = On). */
     fulscrn: number;
-    /** Co-op Mode (0 = Off, 1 = On) */
+    /** Co-op Mode (0 = Off, 1 = On). */
     coop: number;
-    /**
-     * Whether 3d sound is enabled
-     */
+    /** Whether 3d sound is enabled. */
     sond2d: number;
-    /** Sound Effects Volume (0.00 - 1.00)     */
+    /** Sound Effects Volume (0.00 - 1.00) . */
     sfxvol: number;
-    /** The stream key used to access the NT API */
+    /** The stream key used to access the NT API. */
     streamkey: string;
-    /**
-     * Nice Darkness (0 = Off, 1 = On)
-     */
+    /** Nice Darkness (0 = Off, 1 = On). */
     nicedrk: number;
-    /**
-     * Sideart Selection (1, 2, 3, 4, 5, 6, 7, 8)
-
-     */
+    /** Sideart Selection (1, 2, 3, 4, 5, 6, 7, 8). */
     sideart: number;
-    /**
-     * Not sure what this is
-     */
+    /** Not sure what this is. */
     gpkeypick: number;
-    /**
-     * The keybind to fire on a keyboard
-     */
+    /** The keybind to fire on a keyboard. */
     kbkeyfire: number;
-    /** Mouse Capture (0 = Off, 1 = On) */
+    /** Mouse Capture (0 = Off, 1 = On). */
     mousecp: number;
-    /**Not sure what this is */
+    /** *Not sure what this is. */
     kbkeydown: number;
-    /**Not sure what this is */
+    /** *Not sure what this is. */
     kbkeyright: number;
-    /** Not sure what this is */
+    /** Not sure what this is. */
     kbkeyspec: number;
-    /** The player's 64-bit steam id, used to access the NT API */
+    /** The player's 64-bit steam id, used to access the NT API. */
     streamid: string;
-    /** Not sure what this is */
+    /** Not sure what this is. */
     gpkeyswap: number;
-    /** Crosshair Style (1, 2, 3, 4, 5, 6, 7, 8)
-     */
+    /** Crosshair Style (1, 2, 3, 4, 5, 6, 7, 8). */
     crosshair: number;
-    /** Screenshake (0.00 - 2.00) */
+    /** Screenshake (0.00 - 2.00). */
     shake: number;
-    /** Controller rumble */
+    /** Controller rumble. */
     rumble: number;
-    /** Not sure what this is */
+    /** Not sure what this is. */
     gpkeyspec: number;
-    /** WHether left-handed mode should be enabled */
+    /** WHether left-handed mode should be enabled. */
     lfthand: number;
-    /** Not sure what this is, maybe the active ability button */
+    /** Not sure what this is, maybe the active ability button. */
     kbkeyleft: number;
-    /** Keybind to swap weapons on a keyboard */
+    /** Keybind to swap weapons on a keyboard. */
     kbkeyswap: number;
-    /**
-     * Nice Shadows (0 = Off, 1 = On)
-     */
+    /** Nice Shadows (0 = Off, 1 = On). */
     niceshd: number;
-    /**
-     * not sure what this is, seems to be resolution related
-     */
+    /** Not sure what this is, seems to be resolution related. */
     fitscrn: number;
-    /** Gamepad Autoaim (0.00 - 1.00) */
+    /** Gamepad Autoaim (0.00 - 1.00). */
     autoaim: number;
-    /** Freeze Frames (0.00 - 1.00)
-     */
+    /** Freeze Frames (0.00 - 1.00). */
     freeze: number;
-    /** Whether the speedrun timer should be shown (0 = Off, 1 = On) */
+    /** Whether the speedrun timer should be shown (0 = Off, 1 = On). */
     timer: number;
-    /** Music Volume (0.00 - 1.00)
-     */
+    /** Music Volume (0.00 - 1.00). */
     musvol: number;
-    /** Hide HUD (0 = Off, 1 = On)*/
+    /** Hide HUD (0 = Off, 1 = On). */
     nohud: number;
-    /**
-     * Not sure what this is
-     */
+    /** Not sure what this is. */
     kbkeyup: number;
-    /** Window Scaling (1 = 1x, 2 = 2x, 3 = 3x, 4 = 4x) */
+    /** Window Scaling (1 = 1x, 2 = 2x, 3 = 3x, 4 = 4x). */
     scaling: number;
   };
-  /** Character-nonspecific data */
+  /** Character-nonspecific data. */
   data: {
-    /** The date the save data was last updated*/
+    /** The date the save data was last updated. */
     saveday: number;
-    /** The last area you went to */
+    /** The last area you went to. */
     lastarea: number;
-    /** Daily loop count */
+    /** Daily loop count. */
     loop_d: number;
-    /** Daily rank */
+    /** Daily rank. */
     rank_d: number;
-    /** Whether the tutorial should be shown */
+    /** Whether the tutorial should be shown. */
     showtutorial: number;
-    /** Which character you used for the daily */
+    /** Which character you used for the daily. */
     char_d: Character;
-    /** Whether you've completed the daily*/
+    /** Whether you've completed the daily. */
     donedaily: number;
-    /** Unknown, possibly which sub-area you visited last in the daily? */
+    /** Unknown, possibly which sub-area you visited last in the daily?. */
     suba_d: number;
-    /** Whether you've clicked the daily option in the main menu */
+    /** Whether you've clicked the daily option in the main menu. */
     clickeddaily: number;
-    /** Whether the game should check for updates */
+    /** Whether the game should check for updates. */
     checkupdate: number;
-    /** Which {@link Weapon} you left in the proto chest last */
+    /** Which {@link Weapon} you left in the proto chest last. */
     protowep: number;
-    /** Whether hard mode is unlocked */
+    /** Whether hard mode is unlocked. */
     hardgot: number;
-    /** The last area you went to in the daily*/
+    /** The last area you went to in the daily. */
     area_d: number;
   };
 };
 export type CharData = {
-  /** Primary weapon, broken as of U95 */
+  /** Primary weapon, broken as of U95. */
   cwep: number;
   cbgt: number;
   hbst_area: number;
   hbst_kill: number;
-  /** Which {@link Crown}s you have unlocked. 0=locked,1=unlocked, in the following order: None,Random,Death,Life,Haste,Guns,Hatred,Blood,Destiny,Love,Risk,Curses,Luck,Protection */
+  /**
+   * Which {@link Crown}s you have unlocked. 0=locked,1=unlocked, in the following order:
+   * None,Random,Death,Life,Haste,Guns,Hatred,Blood,Destiny,Love,Risk,Curses,Luck,Protection. .
+   */
   crowns: number[];
   dbst_area: number;
   dbst_kill: number;
   cbst_race: number;
-  /** Which golden {@link Weapon} you have for this character */
+  /** Which golden {@link Weapon} you have for this character. */
   cgld: number;
   ctot_hard: number;
   cbst_fast: number;
   ctot_uniq: number;
   dbst_suba: number;
-  /**Total amount of loops */
+  /** *Total amount of loops. */
   ctot_loop: number;
   hbst_suba: number;
   cbst_loop: number;
   ctot_runs: number;
   hbst_loop: number;
-  /** Total amount of deaths
-   */
+  /** Total amount of deaths. */
   ctot_dead: number;
   cbst_suba: number;
   dbst_loop: number;
-  /** Which {@link Skin} you're currently using */
+  /** Which {@link Skin} you're currently using. */
   startskin: Skin;
-  /** Total amount of wins */
+  /** Total amount of wins. */
   ctot_wins: number;
-  /** Current streak */
+  /** Current streak. */
   ctot_strk: number;
-  /** Total amount of deaths
-   */
+  /** Total amount of deaths. */
   ctot_time: number;
-  /** Which {@link Crown} you start with */
+  /** Which {@link Crown} you start with. */
   startcrown: Crown;
-  /**Highest streak */
+  /** *Highest streak. */
   cbst_strk: number;
   ctot_days: number;
   hbst_race: number;
-  /**Character unlocked? (0 = No, 1 = Yes)
-   */
+  /** *Character unlocked? (0 = No, 1 = Yes). */
   cgot: number;
   ctot_kill: number;
   dbst_race: number;
-  /** Your highest killcount with this character */
+  /** Your highest killcount with this character. */
   cbst_kill: number;
-  /** The highest area you've ever been to with this character  */
+  /** The highest area you've ever been to with this character . */
   cbst_area: number;
 };
 export type APIData = {
@@ -255,76 +232,42 @@ export enum Skin {
 }
 export type RunData = {
   /**
-   * Which character you are, as a number. The {@link Character} enum is provided for convenience.
+   * Which character you are, as a number. The {@link Character} enum is provided for convenience. .
    */
   char: Character;
-  /**
-   * Which {@link Enemy} last hit the player
-   */
+  /** Which {@link Enemy} last hit the player. */
   lasthit: Enemy;
-  /**
-   * Which {@link World} your character is in.
-   */
+  /** Which {@link World} your character is in. */
   world: World;
-  /**
-   * The current level number. not fully understood yet.
-   */
+  /** The current level number. Not fully understood yet. */
   level: number;
-  /**
-   * The {@link Crown} your character is wearing
-   */
+  /** The {@link Crown} your character is wearing. */
   crown: Crown;
-  /**
-   * Your character's primary {@link Weapon}
-   */
+  /** Your character's primary {@link Weapon}. */
   wepA: Weapon;
-  /**
-   * Your character's secondary {@link Weapon}
-   */
+  /** Your character's secondary {@link Weapon}. */
   wepB: Weapon;
-  /**
-   * Which skin your character is wearing
-   */
+  /** Which skin your character is wearing. */
   skin: Skin;
-  /**
-   * Which Ultra Mutation you picked.
-   */
+  /** Which Ultra Mutation you picked. */
   ultra: Ultra;
-  /**
-   * Your character's level
-   */
+  /** Your character's level. */
   charlvl: number;
-  /**
-   * How many times you've looped so far
-   */
+  /** How many times you've looped so far. */
   loops: number;
-  /**
-   * Whether you ended the run by sitting on the Nuclear Throne
-   */
+  /** Whether you ended the run by sitting on the Nuclear Throne. */
   win: boolean;
-  /**
-   * A string containing a bitmap of {@link Mutation}s.
-   */
+  /** A string containing a bitmap of {@link Mutation}s. */
   mutations: string;
-  /**
-   * The current kill count
-   */
+  /** The current kill count. */
   kills: number;
-  /**
-   * The player's current health
-   */
+  /** The player's current health. */
   health: number;
-  /**
-   * The player's steam64 id, used to access the API
-   */
+  /** The player's steam64 id, used to access the API. */
   steamid: number;
-  /**
-   * The {@link RunType} of the run
-   */
+  /** The {@link RunType} of the run. */
   type: RunType;
-  /**
-   * The UNIX timestamp corresponding to the beginning of the run
-   */
+  /** The UNIX timestamp corresponding to the beginning of the run. */
   timestamp: number;
 };
 export enum Mutation {
@@ -359,19 +302,19 @@ export enum Mutation {
   OPENMIND = 1 << 28,
 }
 export function hasflag(flags: number, flagToCheck: number): boolean {
-  if ((flags & flagToCheck) == flagToCheck) {
+  if ((flags & flagToCheck) === flagToCheck) {
     return true;
   }
 
   return false;
 }
 export function hasMutation(mutation: Mutation, mutations: string): boolean {
-  let mutationsRev = mutations;
-  return mutationsRev[Math.log2(mutation)] == "1";
+  const mutationsRev = mutations;
+  return mutationsRev[Math.log2(mutation)] === "1";
 }
 export function getMutations(mutations: string): Set<Mutation> {
-  let r = new Set<Mutation>();
-  for (let k of Object.values(Mutation)) {
+  const r = new Set<Mutation>();
+  for (const k of Object.values(Mutation)) {
     if (typeof k === "string") {
       continue;
     }
@@ -385,15 +328,15 @@ export function weaponToString(weapon: Weapon): string | undefined {
   return Weapon[weapon];
 }
 export function getMutationsStringify(mutations: string): Set<string> {
-  let r = new Set<string>();
-  for (let k of Object.values(Mutation)) {
+  const r = new Set<string>();
+  for (const k of Object.values(Mutation)) {
     if (typeof k === "string") {
       continue;
     }
     if (hasMutation(k, mutations)) {
-      let mut = Mutation[k];
-      if (mut == undefined) {
-        console.log("undefined mutation at" + k);
+      const mut = Mutation[k];
+      if (mut === undefined) {
+        console.log(`undefined mutation at${k}`);
         continue;
       }
       r.add(mut);
