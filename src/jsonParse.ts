@@ -2,7 +2,7 @@ import axios from "axios";
 import { error } from "console";
 import { readFileSync } from "fs-extra";
 import * as JSONC from "jsonc-parser";
-import { APIData, SaveData } from "./constants";
+import { APIData, getMutations, SaveData } from "./constants";
 import { getSaveFile } from "./utils";
 const debug = true;
 const overrideKey = "CGHLNRSY8";
@@ -23,12 +23,13 @@ async function main() {
     );
   }
   const apiUrl = `http://tb-api.xyz/stream/get?s=${saveData.options.streamid}&key=${saveData.options.streamkey}`;
-  const response = await axios({
+
+  const response = axios({
     method: "get",
     url: apiUrl,
     responseType: "json",
   });
-  const data = response.data as APIData;
-  console.log(data);
+  const data = (await response).data as APIData;
+  console.log(getMutations(data.current.mutations));
 }
 main();
