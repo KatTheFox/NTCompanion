@@ -1,0 +1,1 @@
+yarn && cd ntcompanion-frontend && yarn
