@@ -10,7 +10,7 @@ import {
   weaponToString,
 } from "./constants";
 import { getSaveFile } from "./utils";
-const debug = true;
+const debug = false;
 const overrideKey = "CGHLNRSY8";
 const overrideID = "76561198163343971";
 async function main() {
@@ -32,29 +32,33 @@ async function main() {
   if (debug) {
     apiUrl = `http://tb-api.xyz/stream/get?s=${overrideID}&key=${overrideKey}`;
   }
-  const response = axios({
-    method: "get",
-    url: apiUrl,
-    responseType: "json",
-  });
-  const data = (await response).data as APIData;
-  console.clear();
-  console.log(getMutationsStringify(data.current.mutations));
-  console.log(
-    "Weapons:\n\tPrimary= " +
-      weaponToString(data.current.wepA) +
-      "\n\tSecondary= " +
-      weaponToString(data.current.wepB) +
-      "\nCharacter: " +
-      Character[data.current.char] +
-      "\nKills: " +
-      data.current.kills +
-      "\nLevel: " +
-      data.current.world +
-      "-" +
-      data.current.level +
-      "\nHP: " +
-      data.current.health
-  );
+  try {
+    const response = axios({
+      method: "get",
+      url: apiUrl,
+      responseType: "json",
+    });
+    const data = (await response).data as APIData;
+    console.clear();
+    console.log(getMutationsStringify(data.current.mutations));
+    console.log(
+      "Weapons:\n\tPrimary= " +
+        weaponToString(data.current.wepA) +
+        "\n\tSecondary= " +
+        weaponToString(data.current.wepB) +
+        "\nCharacter: " +
+        Character[data.current.char] +
+        "\nKills: " +
+        data.current.kills +
+        "\nLevel: " +
+        data.current.world +
+        "-" +
+        data.current.level +
+        "\nHP: " +
+        data.current.health
+    );
+  } catch {
+    console.log("error");
+  }
 }
 setInterval(main, 1000);
