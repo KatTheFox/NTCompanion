@@ -358,9 +358,16 @@ export enum Mutation {
   STRONGSPIRIT = 1 << 27,
   OPENMIND = 1 << 28,
 }
+export function hasflag(flags: number, flagToCheck: number): boolean {
+  if ((flags & flagToCheck) == flagToCheck) {
+    return true;
+  }
+
+  return false;
+}
 export function hasMutation(mutation: Mutation, mutations: string): boolean {
-  let mutationsRev = parseInt(mutations.split("").reverse().join(""));
-  return (mutationsRev & mutation) === mutation;
+  let mutationsRev = mutations;
+  return mutationsRev[Math.log2(mutation)] == "1";
 }
 export function getMutations(mutations: string): Set<Mutation> {
   let r = new Set<Mutation>();
@@ -373,6 +380,29 @@ export function getMutations(mutations: string): Set<Mutation> {
     }
   }
   return r;
+}
+export function weaponToString(weapon: Weapon): string | undefined {
+  return Weapon[weapon];
+}
+export function getMutationsStringify(mutations: string): Set<string> {
+  let r = new Set<string>();
+  for (let k of Object.values(Mutation)) {
+    if (typeof k === "string") {
+      continue;
+    }
+    if (hasMutation(k, mutations)) {
+      let mut = Mutation[k];
+      if (mut == undefined) {
+        console.log("undefined mutation at" + k);
+        continue;
+      }
+      r.add(mut);
+    }
+  }
+  return r;
+}
+export function mutationToString(mutation: Mutation): string | undefined {
+  return Mutation[mutation];
 }
 export enum Crown {
   NONE = 1,

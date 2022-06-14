@@ -1,4 +1,5 @@
 "world":102,"level":1 // pizza sewers
 "world":100,"level":2 // crown vault, 3-2
 "world":100,"level":3 //crown vault, 3-2, had a crown
+"world":100,"level":3 //crown vault, 5-2, no crown
 00000000000000000001000000000= eagle eyes, so mutations are big endian
