@@ -358,6 +358,18 @@ export enum Mutation {
   STRONGSPIRIT = 1 << 27,
   OPENMIND = 1 << 28,
 }
+export function hasMutation(mutation: Mutation, mutations: string): boolean {
+  let mutationsRev = parseInt(mutations.split("").reverse().join(""));
+  return (mutationsRev & mutation) === mutation;
+}
+export function getMutations(mutations: string): Set<Mutation> {
+  let r = new Set<Mutation>();
+  for (let k of Object.values(Mutation)) {
+    if (hasMutation(v, mutations)) {
+      r.add(Mutation[k]);
+    }
+  }
+}
 export enum Crown {
   NONE = 1,
   DEATH = 2,

@@ -27,4 +27,4 @@ async function main() {
   const data = response.data as APIData;
   console.log(data);
 }
-main();
+console.log(parseInt("00000000000000000000010000000"));
