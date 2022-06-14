@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "prepare": "husky install",
-    "jsontest": "ts-node src/backend/jsonParse.ts"
+    "jsontest": "ts-node src/jsonParse.ts"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.4",
