@@ -365,10 +365,14 @@ export function hasMutation(mutation: Mutation, mutations: string): boolean {
 export function getMutations(mutations: string): Set<Mutation> {
   let r = new Set<Mutation>();
   for (let k of Object.values(Mutation)) {
-    if (hasMutation(v, mutations)) {
-      r.add(Mutation[k]);
+    if (typeof k === "string") {
+      continue;
+    }
+    if (hasMutation(k, mutations)) {
+      r.add(k);
     }
   }
+  return r;
 }
 export enum Crown {
   NONE = 1,
