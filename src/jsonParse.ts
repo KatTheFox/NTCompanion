@@ -11,9 +11,9 @@ import {
 } from "./constants";
 import { getSaveFile } from "./utils";
 
-const debug = false;
-const overrideKey = "BLRTVW268";
-const overrideID = "76561198166427260";
+const debug = true;
+const overrideKey = "CGHLNRSY8";
+const overrideID = "76561198163343971";
 function main() {
   const saveFile = getSaveFile();
   const rawJson = readFileSync(saveFile, "utf-8");
