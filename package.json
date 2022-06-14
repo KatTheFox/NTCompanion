@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "prepare": "husky install",
-    "jsontest": "ts-node src/jsonParse.ts",
+    "jsontest": "ts-node src/backend/jsonParse.ts",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
