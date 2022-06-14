@@ -4,8 +4,9 @@
   "include": [
     // This must match the "include" setting in the "tsconfig.json" file.
     "./src/**/*.ts",
+    "./src/**/*.tsx",
 
     // These are ESLint-only inclusions.
-    "./.eslintrc.js",
-  ],
+    "./.eslintrc.js"
+  ]
 }
