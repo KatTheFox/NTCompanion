@@ -71,12 +71,15 @@ setInterval(main, config.refreshInterval);
 function logLastRun(run: RunData) {
   const baseSaveDir = dirname(saveFile);
   const saveDir = path.join(baseSaveDir, streamId);
-  if (fs.existsSync(path.join(saveDir, "runs.json"))) {
-    fs.writeJsonSync(path.join(saveDir, "runs.json"), run, { flag: "a" });
+  const jsonPath = path.join(saveDir, "runs.json");
+  if (fs.existsSync(jsonPath)) {
+    const q = fs.readJSONSync(jsonPath) as RunData[];
+    q.push(run);
+    fs.writeJsonSync(jsonPath, q);
   } else {
     fs.mkdirSync(saveDir, { recursive: true });
     const runs = [run];
-    fs.writeJSONSync(path.join(saveDir, "runs.json"), runs);
+    fs.writeJSONSync(jsonPath, runs);
   }
 }
 function printJson() {
