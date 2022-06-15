@@ -57,7 +57,7 @@ function main() {
           data.current.level
         }\nHP: ${data.current.health}`
       );
-      if (timestamp !== data.previous.timestamp) {
+      if (data.previous !== null && timestamp !== data.previous.timestamp) {
         timestamp = data.previous.timestamp;
         logLastRun(data.previous);
         printJson();
