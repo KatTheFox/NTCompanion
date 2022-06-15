@@ -78,7 +78,7 @@ function logLastRun(run: RunData) {
   const baseSaveDir = dirname(saveFile);
   const saveDir = path.join(baseSaveDir, streamId);
   const jsonPath = path.join(saveDir, "runs.json");
-  if (fs.existsSync(jsonPath) && fs.statSync(jsonPath).size < 0) {
+  if (fs.existsSync(jsonPath) && fs.statSync(jsonPath).size > 0) {
     const q = fs.readJSONSync(jsonPath) as RunData[];
     q.push(run);
     fs.writeJsonSync(jsonPath, q);
