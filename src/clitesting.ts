@@ -15,7 +15,7 @@ import {
 } from "./constants";
 import { getSaveFile } from "./utils";
 
-const debug = true;
+const debug = false;
 let streamKey = "CGHLNRSY8";
 let streamId = "76561198163343971";
 
