@@ -66,7 +66,7 @@ function main() {
         logLastRun(data.previous);
         printJson();
         exportToCsv(path.join(homedir(), "runs.csv"));
-        console.log(path.join(homedir(), "runs.json"));
+        console.log(path.join(homedir(), "runs.csv"));
       }
     })
     .catch((reason) => {
