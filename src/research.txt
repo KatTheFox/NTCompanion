@@ -3,3 +3,4 @@
 "world":100,"level":3 //crown vault, 3-2, had a crown
 "world":100,"level":3 //crown vault, 5-2, no crown
 "world":100,"level":3 //crown vault, 5-2, with crown
+no crown=no proto chest
