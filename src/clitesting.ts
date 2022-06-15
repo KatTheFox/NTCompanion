@@ -46,17 +46,19 @@ function main() {
   })
     .then((response) => {
       const data = response.data as APIData;
-      console.clear();
-      console.log(getMutationsStringify(data.current.mutations));
-      console.log(
-        `Weapons:\n\tPrimary= ${weaponToString(
-          data.current.wepA
-        )}\n\tSecondary= ${weaponToString(data.current.wepB)}\nCharacter: ${
-          Character[data.current.char]
-        }\nKills: ${data.current.kills}\nLevel: ${data.current.world}-${
-          data.current.level
-        }\nHP: ${data.current.health}`
-      );
+      if (data.current !== null) {
+        console.clear();
+        console.log(getMutationsStringify(data.current.mutations));
+        console.log(
+          `Weapons:\n\tPrimary= ${weaponToString(
+            data.current.wepA
+          )}\n\tSecondary= ${weaponToString(data.current.wepB)}\nCharacter: ${
+            Character[data.current.char]
+          }\nKills: ${data.current.kills}\nLevel: ${data.current.world}-${
+            data.current.level
+          }\nHP: ${data.current.health}`
+        );
+      }
       if (data.previous !== null && timestamp !== data.previous.timestamp) {
         timestamp = data.previous.timestamp;
         logLastRun(data.previous);
