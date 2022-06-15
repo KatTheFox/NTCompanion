@@ -1240,6 +1240,31 @@ cspell@^6.1.1:
     strip-ansi "^6.0.1"
     vscode-uri "^3.0.3"
 
+csv-generate@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/csv-generate/-/csv-generate-4.1.0.tgz#31eb5cf9f2484f0d4b289ee03858fc77b3ed55ff"
+  integrity sha512-Z17wI0xmDfpwzB7lShyK7INBt0YMyh5kV7svWTwsBSOa30T6Lq1fHHasmSCtf2rRTI7GnTk52HQRYBk0ToAXQQ==
+
+csv-parse@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-5.2.0.tgz#492b5ca2e5e87e3672ca834e83ab3a0e2486d5cb"
+  integrity sha512-ZuLjTp3Qx2gycoB7FKS9q11KgDL3f0wQszTlNOajS3fHa0jypN/zgjmkam+rczX5dXw5z7+KrDW2hWkM4542Ug==
+
+csv-stringify@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/csv-stringify/-/csv-stringify-6.1.2.tgz#457f374fef3e15740a7f1274d6bf1b1462c12dcf"
+  integrity sha512-7a10seDecJedfVcqvJwcO8b91XJr6O5I+hT0g9HaX/sz2+gmZHfzc+kH2RpCY8ke+5SVWbE2crIEAMNH6jeATg==
+
+csv@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/csv/-/csv-6.1.2.tgz#0e2686643bc2e143179621744040e05fb77f1dc0"
+  integrity sha512-SaG1r+VUc/KsvYHwJn7JC3fAzCIMbBaj6zH0Nj6IFQjNePMfm9HUl55uJ90elP2uRxxmbUy/uN+C2WOj4NOBfA==
+  dependencies:
+    csv-generate "^4.1.0"
+    csv-parse "^5.2.0"
+    csv-stringify "^6.1.2"
+    stream-transform "^3.1.0"
+
 cycle@1.0.x:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/cycle/-/cycle-1.0.3.tgz#21e80b2be8580f98b468f379430662b046c34ad2"
@@ -2924,6 +2949,11 @@ stack-trace@0.0.x:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/stack-trace/-/stack-trace-0.0.10.tgz#547c70b347e8d32b4e108ea1a2a159e5fdde19c0"
   integrity sha512-KGzahc7puUKkzyMt+IqAep+TVNbKP+k2Lmwhub39m1AsTSkaDutx56aDCo+HLDzf/D26BIHTJWNiTG1KAJiQCg==
+
+stream-transform@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/stream-transform/-/stream-transform-3.1.0.tgz#9320fc99b6ef4767a0d87ff374c4366d46d214e9"
+  integrity sha512-ncT/rST/M2N2zGLacJmeB7TNq/XS8Ck0xqvhYX6bgLwSPTSZLVFCSvNnwTU+RYhk9fAfwzCkYH9I5kdgcDMvfw==
 
 string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"

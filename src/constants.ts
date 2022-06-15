@@ -630,3 +630,9 @@ export enum Enemy {
   THRONEIIDEATH = 104,
   NOTYETIMPLEMENTED2 = 105,
 }
+type Config = {
+  refreshInterval: number;
+};
+export const config: Config = {
+  refreshInterval: 5000,
+};
