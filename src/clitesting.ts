@@ -46,7 +46,7 @@ function main() {
     url: apiUrl,
     responseType: "json",
   })
-    .then((response) => {
+    .then(async (response) => {
       const data = response.data as APIData;
       if (data.current !== null) {
         console.clear();
@@ -65,7 +65,7 @@ function main() {
         timestamp = data.previous.timestamp;
         logLastRun(data.previous);
         printJson();
-        exportToCsv(path.join(homedir(), "runs.csv"));
+        await exportToCsv(path.join(homedir(), "runs.csv"));
         console.log(path.join(homedir(), "runs.csv"));
       }
     })
@@ -95,12 +95,12 @@ function printJson() {
     ) as RunData[]
   );
 }
-function exportToCsv(out: string) {
+async function exportToCsv(out: string) {
   const baseSaveDir = dirname(saveFile);
   const saveDir = path.join(baseSaveDir, streamId);
   const jsonPath = path.join(saveDir, "runs.json");
   const json = fs.createReadStream(jsonPath);
-  fs.writeFileSync(jsonPath, "");
+  await fs.writeFile(out, "");
   const csv = fs.createWriteStream(out);
   const processor = new AsyncParser().fromInput(json).toOutput(csv);
   processor.promise(false).catch((err) => {
