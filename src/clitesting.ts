@@ -2,7 +2,9 @@ import axios from "axios";
 import { error } from "console";
 import * as fs from "fs-extra";
 import { readFileSync } from "fs-extra";
+import { AsyncParser } from "json2csv";
 import * as JSONC from "jsonc-parser";
+import { homedir } from "os";
 import path, { dirname } from "path";
 import {
   APIData,
@@ -63,6 +65,7 @@ function main() {
         timestamp = data.previous.timestamp;
         logLastRun(data.previous);
         printJson();
+        exportToCsv(path.join(homedir(), "runs.csv"));
       }
     })
     .catch((reason) => {
@@ -90,4 +93,16 @@ function printJson() {
       path.join(dirname(saveFile), streamId, "runs.json")
     ) as RunData[]
   );
+}
+function exportToCsv(out: string) {
+  const baseSaveDir = dirname(saveFile);
+  const saveDir = path.join(baseSaveDir, streamId);
+  const jsonPath = path.join(saveDir, "runs.json");
+  const json = fs.createReadStream(jsonPath);
+  fs.writeFileSync(jsonPath, "");
+  const csv = fs.createWriteStream(out);
+  const processor = new AsyncParser().fromInput(json).toOutput(csv);
+  processor.promise(false).catch((err) => {
+    console.error(err);
+  });
 }
