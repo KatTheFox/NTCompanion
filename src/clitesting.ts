@@ -98,3 +98,4 @@ async function exportToCsv(out: string) {
     console.error(err);
   });
 }
+main();
