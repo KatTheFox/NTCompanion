@@ -66,36 +66,47 @@ function mainLoop() {
       }
       if (data.previous !== null && v.timestamp !== data.previous.timestamp) {
         v.timestamp = data.previous.timestamp;
-        await logLastRun(data.previous);
-        await exportToCsv(path.join(DATADIR, `${v.streamID}`, "runs.csv"));
+        logLastRun(data.previous).then(() => {
+          exportToCsv(path.join(DATADIR, `${v.streamID}`, "runs.csv"));
+        });
       }
     })
     .catch((reason) => {
-      console.log(reason);
+      console.error("axios fault");
+      console.error(reason);
     });
 }
 async function logLastRun(run: RunData) {
   const dataDir = path.join(DATADIR, "ntcompanion", v.streamID);
+  await fs.mkdirp(dataDir);
   const jsonPath = path.join(dataDir, "runs.json");
-  if ((await fs.pathExists(jsonPath)) && (await fs.stat(jsonPath)).size > 0) {
-    const q = (await fs.readJSON(jsonPath)) as RunData[];
-    q.push(run);
-    await fs.writeJSON(jsonPath, q);
-  } else {
-    await fs.mkdirp(dataDir);
-    const runs = [run];
-    await fs.writeJSON(jsonPath, runs);
-  }
+
+  fs.readJSON(jsonPath)
+    .catch(async (reason) => {
+      console.error("json logger fault");
+      await fs.mkdirp(dataDir);
+      const runs = [run];
+      await fs.writeJSON(jsonPath, runs);
+    })
+    .then(async (jsonData: RunData[]) => {
+      jsonData.push(run);
+      await fs.writeJSON(jsonPath, jsonData);
+    });
 }
+
 async function exportToCsv(out: string) {
   const dataDir = path.join(DATADIR, v.streamID);
-  const jsonPath = path.join(dataDir, "runs.json");
-  const json = fs.createReadStream(jsonPath);
   await fs.mkdirp(dataDir);
+  const jsonPath = path.join(dataDir, "runs.json");
+  if (!fs.existsSync(jsonPath)) {
+    return;
+  }
+  const json = fs.createReadStream(jsonPath);
   await fs.writeFile(out, "");
   const csv = fs.createWriteStream(out);
   const processor = new AsyncParser().fromInput(json).toOutput(csv);
   processor.promise(false).catch((err) => {
+    console.error("csv fault");
     console.error(err);
   });
 }
