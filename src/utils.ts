@@ -2,7 +2,7 @@ import * as fs from "fs-extra";
 import os from "os";
 import path from "path";
 
-export function getDefaultSaveDir(): string | undefined {
+function getDefaultSaveDir(): string | undefined {
   const home = os.homedir();
   switch (os.platform()) {
     case "win32":
@@ -34,7 +34,15 @@ export function getSaveFile(): string {
   }
   return promptUserForSaveFile();
 }
-
+export function getSaveDir(): string {
+  const saveDir = getDefaultSaveDir();
+  return saveDir !== undefined
+    ? saveDir
+    : path.dirname(promptUserForSaveFile());
+}
+export function getDataDir(): string {
+  return path.join(getSaveDir(), "ntcompanion");
+}
 function promptUserForSaveFile(): string {
   return ""; // todo
 }

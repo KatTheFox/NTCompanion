@@ -4,37 +4,33 @@ import * as fs from "fs-extra";
 import { readFileSync } from "fs-extra";
 import { AsyncParser } from "json2csv";
 import * as JSONC from "jsonc-parser";
-import { homedir } from "os";
-import path, { dirname } from "path";
+import path from "path";
 import {
   APIData,
   Character,
   config,
+  DATADIR,
   getMutationsStringify,
   RunData,
   SaveData,
   weaponToString,
 } from "./constants";
-import { getSaveFile } from "./utils";
 
-const debug = false;
-let streamKey = "CGHLNRSY8";
-let streamId = "76561198163343971";
-
-const saveFile = getSaveFile();
-const rawJson = readFileSync(saveFile, "utf-8");
+const rawJson = readFileSync(config.saveFile, "utf-8");
 const saveData = JSONC.parse(rawJson) as SaveData;
-if (saveData.options.streamkey === null) {
-  error(
-    "No stream key found! please enable stream key in Nuclear Throne's settings, then restart this program"
-  );
-}
-if (saveData.options.streamid === null) {
-  error(
-    "It looks like you're playing on a non-steam version of Nuclear Throne. The Nuclear Throne API requires you to be playing on the Steam version."
-  );
-}
-if (!debug) {
+let streamId = config.overrideId;
+let streamKey = config.overrideKey;
+if (!config.overrideMode) {
+  if (saveData.options.streamkey === null) {
+    error(
+      "No stream key found! please enable stream key in Nuclear Throne's settings, then restart this program"
+    );
+  }
+  if (saveData.options.streamid === null) {
+    error(
+      "It looks like you're playing on a non-steam version of Nuclear Throne. The Nuclear Throne API requires you to be playing on the Steam version."
+    );
+  }
   streamId = saveData.options.streamid;
   streamKey = saveData.options.streamkey;
 }
@@ -64,9 +60,7 @@ function main() {
       if (data.previous !== null && timestamp !== data.previous.timestamp) {
         timestamp = data.previous.timestamp;
         logLastRun(data.previous);
-        printJson();
-        await exportToCsv(path.join(homedir(), "runs.csv"));
-        console.log(path.join(homedir(), "runs.csv"));
+        await exportToCsv(path.join(DATADIR, `${streamId}`, "runs.csv"));
       }
     })
     .catch((reason) => {
@@ -75,30 +69,21 @@ function main() {
 }
 setInterval(main, config.refreshInterval);
 function logLastRun(run: RunData) {
-  const baseSaveDir = dirname(saveFile);
-  const saveDir = path.join(baseSaveDir, streamId);
-  const jsonPath = path.join(saveDir, "runs.json");
+  const dataDir = path.join(DATADIR, "ntcompanion", streamId);
+  const jsonPath = path.join(dataDir, "runs.json");
   if (fs.existsSync(jsonPath) && fs.statSync(jsonPath).size > 0) {
     const q = fs.readJSONSync(jsonPath) as RunData[];
     q.push(run);
     fs.writeJsonSync(jsonPath, q);
   } else {
-    fs.mkdirSync(saveDir, { recursive: true });
+    fs.mkdirSync(dataDir, { recursive: true });
     const runs = [run];
     fs.writeJSONSync(jsonPath, runs);
   }
 }
-function printJson() {
-  console.log(
-    fs.readJSONSync(
-      path.join(dirname(saveFile), streamId, "runs.json")
-    ) as RunData[]
-  );
-}
 async function exportToCsv(out: string) {
-  const baseSaveDir = dirname(saveFile);
-  const saveDir = path.join(baseSaveDir, streamId);
-  const jsonPath = path.join(saveDir, "runs.json");
+  const dataDir = path.join(DATADIR, streamId);
+  const jsonPath = path.join(dataDir, "runs.json");
   const json = fs.createReadStream(jsonPath);
   await fs.writeFile(out, "");
   const csv = fs.createWriteStream(out);

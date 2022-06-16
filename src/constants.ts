@@ -1,3 +1,5 @@
+import { getDataDir, getSaveFile } from "./utils";
+
 export enum Character {
   FISH = 1,
   CRYSTAL = 2,
@@ -312,7 +314,7 @@ export function hasMutation(mutation: Mutation, mutations: string): boolean {
   const mutationsRev = mutations;
   return mutationsRev[Math.log2(mutation)] === "1";
 }
-export function getMutations(mutations: string): Set<Mutation> {
+export function getMutationSet(mutations: string): Set<Mutation> {
   const r = new Set<Mutation>();
   for (const k of Object.values(Mutation)) {
     if (typeof k === "string") {
@@ -320,6 +322,18 @@ export function getMutations(mutations: string): Set<Mutation> {
     }
     if (hasMutation(k, mutations)) {
       r.add(k);
+    }
+  }
+  return r;
+}
+export function getMutationsArray(mutations: string): Mutation[] {
+  const r: Mutation[] = [];
+  for (const k of Object.values(Mutation)) {
+    if (typeof k === "string") {
+      continue;
+    }
+    if (hasMutation(k, mutations)) {
+      r.push(k);
     }
   }
   return r;
@@ -630,9 +644,18 @@ export enum Enemy {
   THRONEIIDEATH = 104,
   NOTYETIMPLEMENTED2 = 105,
 }
-type Config = {
+export type Config = {
   refreshInterval: number;
+  saveFile: string;
+  overrideMode: boolean;
+  overrideKey: string;
+  overrideId: string;
 };
 export const config: Config = {
   refreshInterval: 5000,
+  saveFile: getSaveFile(),
+  overrideMode: false,
+  overrideId: "",
+  overrideKey: "",
 };
+export const DATADIR = getDataDir();
