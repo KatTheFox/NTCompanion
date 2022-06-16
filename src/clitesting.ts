@@ -1,7 +1,6 @@
 import axios from "axios";
 import { error } from "console";
 import * as fs from "fs-extra";
-import { readFileSync } from "fs-extra";
 import { AsyncParser } from "json2csv";
 import * as JSONC from "jsonc-parser";
 import path from "path";
@@ -15,31 +14,39 @@ import {
   SaveData,
   weaponToString,
 } from "./constants";
+const v = {
+  streamID: "",
+  streamKey: "",
+  apiUrl: "",
+  timestamp: 0,
+};
+async function main() {
+  const rawJson = await fs.readFile(config.saveFile, "utf-8");
+  const saveData = JSONC.parse(rawJson) as SaveData;
+  v.streamID = config.overrideId;
+  v.streamKey = config.overrideKey;
+  if (!config.overrideMode) {
+    if (saveData.options.streamkey === null) {
+      error(
+        "No stream key found! please enable stream key in Nuclear Throne's settings, then restart this program"
+      );
+    }
+    if (saveData.options.streamid === null) {
+      error(
+        "It looks like you're playing on a non-steam version of Nuclear Throne. The Nuclear Throne API requires you to be playing on the Steam version."
+      );
+    }
+    v.streamID = saveData.options.streamid;
+    v.streamKey = saveData.options.streamkey;
+  }
+  v.apiUrl = `http://tb-api.xyz/stream/get?s=${v.streamID}&key=${v.streamKey}`;
 
-const rawJson = readFileSync(config.saveFile, "utf-8");
-const saveData = JSONC.parse(rawJson) as SaveData;
-let streamId = config.overrideId;
-let streamKey = config.overrideKey;
-if (!config.overrideMode) {
-  if (saveData.options.streamkey === null) {
-    error(
-      "No stream key found! please enable stream key in Nuclear Throne's settings, then restart this program"
-    );
-  }
-  if (saveData.options.streamid === null) {
-    error(
-      "It looks like you're playing on a non-steam version of Nuclear Throne. The Nuclear Throne API requires you to be playing on the Steam version."
-    );
-  }
-  streamId = saveData.options.streamid;
-  streamKey = saveData.options.streamkey;
+  setInterval(mainLoop, config.refreshInterval);
 }
-const apiUrl = `http://tb-api.xyz/stream/get?s=${streamId}&key=${streamKey}`;
-let timestamp = 0;
-function main() {
+function mainLoop() {
   axios({
     method: "get",
-    url: apiUrl,
+    url: v.apiUrl,
     responseType: "json",
   })
     .then(async (response) => {
@@ -57,32 +64,31 @@ function main() {
           }\nHP: ${data.current.health}`
         );
       }
-      if (data.previous !== null && timestamp !== data.previous.timestamp) {
-        timestamp = data.previous.timestamp;
+      if (data.previous !== null && v.timestamp !== data.previous.timestamp) {
+        v.timestamp = data.previous.timestamp;
         logLastRun(data.previous);
-        await exportToCsv(path.join(DATADIR, `${streamId}`, "runs.csv"));
+        await exportToCsv(path.join(DATADIR, `${v.streamID}`, "runs.csv"));
       }
     })
     .catch((reason) => {
       console.log(reason);
     });
 }
-setInterval(main, config.refreshInterval);
-function logLastRun(run: RunData) {
-  const dataDir = path.join(DATADIR, "ntcompanion", streamId);
+async function logLastRun(run: RunData) {
+  const dataDir = path.join(DATADIR, "ntcompanion", v.streamID);
   const jsonPath = path.join(dataDir, "runs.json");
-  if (fs.existsSync(jsonPath) && fs.statSync(jsonPath).size > 0) {
-    const q = fs.readJSONSync(jsonPath) as RunData[];
+  if ((await fs.pathExists(jsonPath)) && (await fs.stat(jsonPath)).size > 0) {
+    const q = (await fs.readJSON(jsonPath)) as RunData[];
     q.push(run);
-    fs.writeJsonSync(jsonPath, q);
+    await fs.writeJSON(jsonPath, q);
   } else {
-    fs.mkdirSync(dataDir, { recursive: true });
+    await fs.mkdir(dataDir, { recursive: true });
     const runs = [run];
-    fs.writeJSONSync(jsonPath, runs);
+    await fs.writeJSON(jsonPath, runs);
   }
 }
 async function exportToCsv(out: string) {
-  const dataDir = path.join(DATADIR, streamId);
+  const dataDir = path.join(DATADIR, v.streamID);
   const jsonPath = path.join(dataDir, "runs.json");
   const json = fs.createReadStream(jsonPath);
   await fs.writeFile(out, "");
