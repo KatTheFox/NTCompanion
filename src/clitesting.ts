@@ -66,7 +66,7 @@ function mainLoop() {
       }
       if (data.previous !== null && v.timestamp !== data.previous.timestamp) {
         v.timestamp = data.previous.timestamp;
-        logLastRun(data.previous);
+        await logLastRun(data.previous);
         await exportToCsv(path.join(DATADIR, `${v.streamID}`, "runs.csv"));
       }
     })
@@ -82,7 +82,7 @@ async function logLastRun(run: RunData) {
     q.push(run);
     await fs.writeJSON(jsonPath, q);
   } else {
-    await fs.mkdir(dataDir, { recursive: true });
+    await fs.mkdirp(dataDir);
     const runs = [run];
     await fs.writeJSON(jsonPath, runs);
   }
@@ -91,6 +91,7 @@ async function exportToCsv(out: string) {
   const dataDir = path.join(DATADIR, v.streamID);
   const jsonPath = path.join(dataDir, "runs.json");
   const json = fs.createReadStream(jsonPath);
+  await fs.mkdirp(dataDir);
   await fs.writeFile(out, "");
   const csv = fs.createWriteStream(out);
   const processor = new AsyncParser().fromInput(json).toOutput(csv);
