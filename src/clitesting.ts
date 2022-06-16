@@ -1,6 +1,6 @@
-import axios from "axios";
 import { error } from "console";
 import * as fs from "fs-extra";
+import { get } from "http";
 import { AsyncParser } from "json2csv";
 import * as JSONC from "jsonc-parser";
 import path from "path";
@@ -19,6 +19,9 @@ const v = {
   streamKey: "",
   apiUrl: "",
   timestamp: 0,
+  heapTot: 0,
+  heapUsed: 0,
+  do: true,
 };
 async function main() {
   const rawJson = await fs.readFile(config.saveFile, "utf-8");
@@ -41,19 +44,24 @@ async function main() {
   }
   v.apiUrl = `http://tb-api.xyz/stream/get?s=${v.streamID}&key=${v.streamKey}`;
 
-  setInterval(mainLoop, config.refreshInterval);
+  setInterval(async () => {
+    await mainLoop();
+  }, config.refreshInterval);
 }
-function mainLoop() {
-  axios({
-    method: "get",
-    url: v.apiUrl,
-    responseType: "json",
-  })
-    .then(async (response) => {
-      const data = response.data as APIData;
+async function mainLoop() {
+  let json = "";
+
+  get(v.apiUrl, (res) => {
+    res.on("data", (chunk) => {
+      json += chunk;
+    });
+    res.on("end", () => {
+      res.destroy();
+      let data = JSONC.parse(json) as APIData;
       if (data.current !== null) {
         console.clear();
         console.log(getMutationsStringify(data.current.mutations));
+        let memoryUsage = process.memoryUsage();
         console.log(
           `Weapons:\n\tPrimary= ${weaponToString(
             data.current.wepA
@@ -70,11 +78,12 @@ function mainLoop() {
           exportToCsv(path.join(DATADIR, `${v.streamID}`, "runs.csv"));
         });
       }
-    })
-    .catch((reason) => {
-      console.error("axios fault");
-      console.error(reason);
     });
+    res.on("error", (err) => {
+      console.error(err);
+      res.resume();
+    });
+  });
 }
 async function logLastRun(run: RunData) {
   const dataDir = path.join(DATADIR, "ntcompanion", v.streamID);
@@ -105,9 +114,15 @@ async function exportToCsv(out: string) {
   await fs.writeFile(out, "");
   const csv = fs.createWriteStream(out);
   const processor = new AsyncParser().fromInput(json).toOutput(csv);
-  processor.promise(false).catch((err) => {
-    console.error("csv fault");
-    console.error(err);
-  });
+  processor
+    .promise(false)
+    .catch((err) => {
+      console.error("csv fault");
+      console.error(err);
+    })
+    .finally(() => {
+      json.destroy();
+      csv.destroy();
+    });
 }
 main();
